@@ -8,7 +8,25 @@ require('./bootstrap');
 require('admin-lte');
 
 window.Vue = require('vue');
+//router
+import router from './router'
 
+//https://vform.vercel.app/#bootstrap
+import Form from 'vform'
+window.Form = Form;//(1)
+import {
+  Button,
+  HasError,
+  AlertError,
+  AlertErrors,
+  AlertSuccess
+} from 'vform/src/components/bootstrap4'
+
+Vue.component(Button.name, Button)
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+Vue.component(AlertErrors.name, AlertErrors)
+Vue.component(AlertSuccess.name, AlertSuccess)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -20,14 +38,58 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+//vue-progressbar
+import VueProgressBar from 'vue-progressbar'
+const options = {
+  color: '#bffaf3',
+  failedColor: '#874b4b',
+  thickness: '5px',
+  transition: {
+    speed: '1s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false
+}
+Vue.use(VueProgressBar, options)
+
+//VueSweetalert2 
+import Swal from 'sweetalert2'
+window.Swal =  Swal;
+
+// Filters
+Vue.filter('Upper', function (value) {
+     return value.charAt(0).toUpperCase() + value.slice(1)
+});
+
+// vue-moment
+Vue.use(require('vue-moment'));
+
+window.vm = new Vue();
 
 const app = new Vue({
     el: '#app',
+    router,
+    data() {
+    	return {
+    		
+    	}
+    },
+
+
 });
+
+
+/*
+Note
+ */
+//(1) bất cứ components nào cũng sẽ xài đc Form
