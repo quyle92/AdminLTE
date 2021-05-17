@@ -42,10 +42,17 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
+
+        /*** Ví dụ: phải install và register trong AuthServiceProvider trước. 
+        Ref: https://laravel.com/docs/5.8/authentication ***/ 
+        // 'api' => [
+        // 'driver' => 'jwt', //driver is the package
+        // 'provider' => 'hoiVien',
+        // ],
     ],
 
     /*
@@ -75,6 +82,12 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        
+        /*** Ví dụ: phải install và register trong AuthServiceProvider trước. 
+        Ref: https://laravel.com/docs/5.8/authentication ***/ 
+        // 'hoiVien' => [
+        //     'driver' => 'riak',
+        // ],
     ],
 
     /*
@@ -101,3 +114,13 @@ return [
     ],
 
 ];
+
+/*
+Note:
+ */
+//(1) làm custom middleware phải có những steps sau:
+//- Install the packge
+//- Add service provider like https://jwt-auth.readthedocs.io/en/docs/laravel-installation/
+//- Add  that middleware to Middleware/Kernel.php like passport (https://laravel.com/docs/5.8/passport#consuming-your-api-with-javascript)
+//- Make changes to config/auth.php (like exampple above)
+//- clear config cache

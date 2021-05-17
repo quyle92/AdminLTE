@@ -64,6 +64,23 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        // 'disks' => [
+        //     'attachments' => [
+        //         'driver' => 'local',
+        //         'root' => storage_path('attachments'),
+        //     ],
+        //     'images' => [
+        //         'driver' => 'local',
+        //         'root' => public_path('img'),
+        //     ],
+        // ], (1)
+
+
     ],
 
 ];
+
+/*
+Note
+ */
+//(1)just an example taken from https://laracasts.com/discuss/channels/laravel/file-facade-vs-storage-facade

@@ -22,6 +22,15 @@ Route::apiResources([
     'users' => API\UserController::class,
 ]);
 
+Route::apiResources([
+    'posts' => API\PostController::class,
+]);
+
+Route::get('profile', 'API\UserController@getProfile');
+Route::put('profile', 'API\UserController@updateProfile');
+
+Route::get('search', 'API\PostController@search');
+
 
 /*
 Note

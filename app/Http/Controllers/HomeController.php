@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,5 +26,18 @@ class HomeController extends Controller
     {  
        
         return view('home');
+    }
+
+    public function getUser()
+    {
+        return User::orderBy('created_at', 'asc')->paginate(10);
+    }
+
+    public function delUser()
+    {
+        $user = User::find('163');
+        $user->delete();
+        
+        return User::orderBy('created_at', 'desc')->paginate(3);
     }
 }

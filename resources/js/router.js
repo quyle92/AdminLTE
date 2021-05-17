@@ -3,6 +3,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Dashboard from './components/Dashboard'
+import Post from './components/Post'
 import Profile from './components/Profile'
 import NotFoundComponent from './components/NotFoundComponent'
 import User from './components/User'
@@ -16,7 +17,26 @@ const routes = [
 	{
 		path: '/user', 
       	component: User,
-      	name: 'user'
+      	name: 'user',
+      	beforeEnter: function(to, from, next){
+	      if( window.viewPermission.User !== true ){
+	        Swal.fire(
+              'Stop!',
+              'You\'re not allowed to go here!!!',
+              'error'
+            ).then( () => {
+                setTimeout(() => {
+                     window.history.back();
+                })
+            });
+	      }
+	      next();
+	    }
+	},
+	{
+		path:'/post',
+		component: Post,
+		name: 'post'
 	},
 	{
 		path:'/profile',
@@ -36,6 +56,7 @@ export default new Router({
 	routes,
 	linkActiveClass:  "active"
 });
+
 
 /*
 Note

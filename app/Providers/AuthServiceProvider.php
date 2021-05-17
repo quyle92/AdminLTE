@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
+use App\Policies\PostPolicy;
+use App\Policies\UserPolicy;
+use App\Post;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Post' => 'App\Policies\PostPolicy',
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -25,6 +31,33 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Passport::routes();
+
+        Gate::define('isAdmin', function (User $user) {
+            return $user->type === 'admin';
+        });
+
+        Gate::define('isAuthor', function (User $user) {
+            return $user->type === 'author';
+        });
+
+        Gate::define('isUser', function (User $user) {
+            return $user->type === 'user';
+        });
+
+        // Gate::before(function (User $user){
+        //     if( $user->type = 'admin' ){
+        //         return true;
+        //     }
+        // });
+        
+        // Gate::define('update-post', function ($user, $post) {
+        //     return $user->id == $post->user_id;
+        // });
+        
+
+
     }
+
+
 }

@@ -10,6 +10,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Starter</title>
   <link rel="stylesheet" href="{{ mix('/css/app.css') }}" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="{{ asset('/js/my_script.js') }}"></script> 
+  <script>
+    window.userType = "{{ auth()->user()->type }}"
+    window.permission = htmlDecode("{{ (auth()->user()->role->permission) }}");
+    let permissionJson = JSON.parse(window.permission)
+    window.viewPermission = viewPermission( permissionJson );
+  </script>
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -22,12 +30,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+          <div class="input-group" data-widget="sidebar-search">
+            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search" v-on:keyup="search" v-model="term">
+            <div class="input-group-append">
+              <button class="btn btn-sidebar">
+                <i class="fas fa-search fa-fw"></i>
+              </button>
+            </div>
+          </div>
+        </div> 
     </ul>
 
 
@@ -54,23 +67,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-<!--       <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div> -->
+
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          @can('isAdmin', Auth::user())
           <li class="nav-item">
             <router-link to="/" class="nav-link" tag="a" exact>
                 <i class="nav-icon fas fa-th orange"></i>
@@ -79,6 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
             </router-link>
           </li>
+          @endcan
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -89,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <router-link to="/user" class="nav-link" tag="a" >
+                <router-link to="/user" class="nav-link" tag="a" v-if="isShowUser" >
                   <i class="fas fa-users"></i>
                   <p>User</p>
                 </router-link>
@@ -103,6 +108,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <li class="nav-item">
+            <router-link to="/post" class="nav-link" tag="a" >
+                <i class="fas fa-book-medical green"></i>
+                <p>
+                  Post
+                </p>
+            </router-link>
+          </li>
+           <li class="nav-item">
             <router-link to="/profile" class="nav-link" tag="a" >
                 <i class="fas fa-user-alt green"></i>
                 <p>

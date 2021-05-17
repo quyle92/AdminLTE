@@ -27,6 +27,15 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 Vue.component(AlertErrors.name, AlertErrors)
 Vue.component(AlertSuccess.name, AlertSuccess)
+
+//gate.js
+import Gate from './gate.js'; 
+Vue.prototype.$Gate = new Gate( window.userType );
+
+//helper.js
+import Helper from './helper';
+Vue.prototype.$Helper = new Helper;
+//console.log( $Helper)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -74,16 +83,42 @@ Vue.filter('Upper', function (value) {
 // vue-moment
 Vue.use(require('vue-moment'));
 
+//https://github.com/ndelvalle/v-blur
+import vBlur from 'v-blur'
+Vue.use(vBlur)
+
 window.vm = new Vue();
+
+//store
+import store from './store'
+
+//Pagination
+Vue.component('pagination', require('laravel-vue-pagination'));
+
+
 
 const app = new Vue({
     el: '#app',
     router,
+    store,
     data() {
     	return {
-    		
+    		term:''
     	}
     },
+    computed: {
+      isShowUser() { 
+         return this.$store.state.viewPermission.User
+      },
+      isShowPost() { 
+         return this.$store.state.viewPermission.Post
+      }
+    },
+    methods: {
+      search: _.debounce(function (){//(5)
+          vm.$emit('search', this.term)
+      }, 2000)
+    }
 
 
 });

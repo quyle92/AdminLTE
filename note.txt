@@ -1,1 +1,9 @@
 https://www.youtube.com/watch?v=CowsopJhX3M&list=PLB4AdipoHpxaHDLIaMdtro1eXnQtl_UvE&index=2
+
+1/Laravel API auth:
+-accept:application/json => ko thì Laravel sẽ tưởng là browser request nên nếu unthorized thì sẽ ko trả về json error message mà lại trả về route['login']
+=> cái này khác gì với X-Requested-With': 'XMLHttpRequest???
+2/ làm thêm về websocket cho admin thumbnail ở sidebar
+3/ api resource vs resource controller???
+https://laravel.com/docs/5.8/controllers#resource-controllers
+https://laravel.com/docs/8.x/eloquent-resources
