@@ -18,7 +18,9 @@ use Illuminate\Support\Str;
 Route::get('/getUser', 'HomeController@getUser');
 Route::delete('/delUser', 'HomeController@delUser');
 Route::get('/', 'HomeController@index')->name('home');
-
+Route::get('test', function(){
+	return view('welcome');
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -8,7 +8,7 @@
                 
 
                 <div class="card-header">
-                    <h3 class="card-title">Responsive Hover Table</h3>
+                    <h3 class="card-title">Responsive Hover Table</h3><test></test>
                     <div class="card-tools">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#titleModal" @click.prevent="openAddTitleModal" v-if="permission.write">
                           Add Title
@@ -93,6 +93,7 @@
 
 <script>
 import _ from 'lodash';
+import test from '../components/Test.vue';
     export default {
         data: () => ({
             form: new Form({

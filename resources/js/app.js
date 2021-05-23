@@ -35,7 +35,7 @@ Vue.prototype.$Gate = new Gate( window.userType );
 //helper.js
 import Helper from './helper';
 Vue.prototype.$Helper = new Helper;
-//console.log( $Helper)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -95,10 +95,15 @@ import store from './store'
 //Pagination
 Vue.component('pagination', require('laravel-vue-pagination'));
 
+Vue.component('test', require('./components/Test.vue').default);
+
 
 
 const app = new Vue({
     el: '#app',
+    components: {
+  test: () => import('./components/Test.vue')
+},
     router,
     store,
     data() {
